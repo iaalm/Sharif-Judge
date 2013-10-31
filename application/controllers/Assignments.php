@@ -430,6 +430,24 @@ class Assignments extends CI_Controller
 		$this->edit = TRUE;
 		$this->add();
 	}
+        
+        public function problems($assignment_id)
+        {
+                $data = array(
+			'username' => $this->username,
+			'user_level' => $this->user_level,
+			'all_assignments' => $this->assignment_model->all_assignments(),
+			'title' => 'Assignments',
+			'style' => 'main.css',
+			'success_messages' => $this->success_messages,
+			'error_messages' => $this->error_messages
+		);
+                $data['assignment'] = $this->assignment;
+		$this->load->view('templates/header', $data);
+                $data["problems"]=$this->assignment_model->all_problems($assignment_id);
+		$this->load->view('pages/list_problems', $data);
+		$this->load->view('templates/footer');
+        }
 
 
 }
