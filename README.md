@@ -1,3 +1,9 @@
+#Soochow University Online Judge
+
+forked from mjnaderi/Sharif-Judge
+
+added the feature to view the problem description
+
 # Sharif Judge
 
 [Sharif Judge](http://sharifjudge.ir) is a free and open source online judge for C, C++, Java and
