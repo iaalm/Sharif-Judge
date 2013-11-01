@@ -201,5 +201,33 @@ class Submit extends CI_Controller
 	}
 
 
+        function problem($problem_id){
+                $this->data = array(
+			'username' => $this->username,
+			'user_level' => $this->user_level,
+			'all_assignments' => $this->assignment_model->all_assignments(),
+			'assignment' => $this->assignment,
+			'problems' => $this->problems,
+			'title' => 'Submit',
+			'style' => 'main.css',
+			'in_queue' => FALSE,
+			'upload_state' => ''
+		);
+		$this->form_validation->set_message('greater_than', 'Select a %s.');
+		$this->form_validation->set_message('_check_language', 'Select a valid %s.');
+		$this->form_validation->set_rules('problem', 'problem', 'required|integer|greater_than[0]');
+		$this->form_validation->set_rules('language', 'language', 'required|callback__check_language');
+
+		if ($this->form_validation->run()){
+			$this->_upload();
+		}
+                $data['assignment'] = $this->assignment;
+                $file_name = rtrim($this->settings_model->get_setting('assignments_root'), '/').'/assignment_'.$this->assignment['id'].'/p'.$problem_id.'/'.'content.html';
+                $this->data['problem_id'] = $problem_id;
+                $this->data["content"] = file_get_contents($file_name)  or show_error('cannot open problem description !' , 404 ,'An Error Was Encountered');    ;
+                $this->load->view('templates/header', $this->data);
+                $this->load->view('pages/problem', $this->data);
+                $this->load->view('templates/footer');
+        }
 
 }
