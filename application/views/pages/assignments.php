@@ -34,11 +34,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php endif ?>
 		<?php foreach($all_assignments as $item): ?>
 			<div class="assignment_block" id="<?php echo $item['id'] ?>">
-				<div class="c1">
+                            <!--
+                            <div class="c1">
 					<div class="select_assignment <?php echo ($item['id']==$assignment['id']?'check checked':'check') ?> i<?php echo $item['id'] ?>" id="<?php echo $item['id'] ?>"></div>
 				</div>
+                            -->
+                            <a href="<?php echo site_url('assignments/list_problems/') ?>"><div class="select_assignment check i<?php echo $item['id'] ?>" id="<?php echo $item['id'] ?>"></div></a>
 				<div class="assignment_item">
-                                    <div class="assignment_subitem"><a href="<?php echo site_url('assignments/problems/'.$item['id']) ?>"><?php echo $item['name'] ?></a></div>
+                                    <div class="assignment_subitem"><?php echo $item['name'] ?></div>
 					<div class="assignment_subitem"><?php echo $item['problems'] ?> problem<?php echo $item['problems']!=1?'s':'' ?></div>
 					<div class="assignment_subitem"><?php echo $item['total_submits'] ?> submit<?php echo $item['total_submits']!=1?'s':'' ?></div>
 					<div class="assignment_subitem"><?php

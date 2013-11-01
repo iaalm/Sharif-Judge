@@ -431,7 +431,7 @@ class Assignments extends CI_Controller
 		$this->add();
 	}
         
-        public function problems($assignment_id)
+        public function list_problems()
         {
                 $data = array(
 			'username' => $this->username,
@@ -444,9 +444,16 @@ class Assignments extends CI_Controller
 		);
                 $data['assignment'] = $this->assignment;
 		$this->load->view('templates/header', $data);
-                $data["problems"]=$this->assignment_model->all_problems($assignment_id);
+                $data["problems"]=$this->assignment_model->all_problems($this->assignment['id']);
 		$this->load->view('pages/list_problems', $data);
 		$this->load->view('templates/footer');
+        }
+        function problem($problem_id){
+                $file_name = rtrim($this->settings_model->get_setting('assignments_root'), '/').'/assignment_'.$this->assignment['id'].'/p'.$this->problem['id'].'/'.'content.html';
+                $file = fopen($file_name,"r") or show_error('cannot open problem description !' , 404 ,'An Error Was Encountered');    
+                $content = fread($file);
+                echo $content;
+                fclose($file);
         }
 
 
