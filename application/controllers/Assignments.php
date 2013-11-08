@@ -363,7 +363,7 @@ class Assignments extends CI_Controller
 				mkdir($assignment_dir, 0700);
 
 			// Remove previous test cases
-			shell_exec('cd '.$assignment_dir.'; rm -r */in; rm -r */out; rm -r */tester.cpp;');
+			shell_exec('cd '.$assignment_dir.'; rm -r */in; rm -r */out; rm -r */tester.cpp; rm -r */content.html;');
 
 			for ($i=1; $i <= $this->input->post('number_of_problems'); $i++)
 				if ( ! file_exists($assignment_dir."/p$i"))
@@ -377,13 +377,13 @@ class Assignments extends CI_Controller
 		elseif ($this->upload->do_upload('tests'))
 		{
 			$this->load->library('unzip');
-			$this->unzip->allow(array('txt', 'cpp'));
+			$this->unzip->allow(array('txt', 'cpp','html','png'));
 			if ( ! file_exists($assignment_dir))
 				mkdir($assignment_dir, 0700);
 			$u_data = $this->upload->data();
 
 			// Remove previous test cases
-			shell_exec('cd '.$assignment_dir.'; rm -r */in; rm -r */out; rm -r */tester.cpp;');
+			shell_exec('cd '.$assignment_dir.'; rm -r */in; rm -r */out; rm -r */tester.cpp; rm -r */content.html;');
 
 			// Extract and save new tests cases:
 			$extract_result = $this->unzip->extract($u_data['full_path'], $assignment_dir);
