@@ -32,14 +32,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php if (count($all_assignments)==0): ?>
 			<p style="text-align: center;">Nothing to show...</p>
 		<?php endif ?>
+                       <a href="<?php echo site_url('assignments/list_problems/') ?>">list problems</a>
 		<?php foreach($all_assignments as $item): ?>
 			<div class="assignment_block" id="<?php echo $item['id'] ?>">
-                            <!--
                             <div class="c1">
 					<div class="select_assignment <?php echo ($item['id']==$assignment['id']?'check checked':'check') ?> i<?php echo $item['id'] ?>" id="<?php echo $item['id'] ?>"></div>
-				</div>
-                            -->
-                            <a href="<?php echo site_url('assignments/list_problems/') ?>"><div class="select_assignment check i<?php echo $item['id'] ?>" id="<?php echo $item['id'] ?>"></div></a>
+			</div>
+                            
 				<div class="assignment_item">
                                     <div class="assignment_subitem"><?php echo $item['name'] ?></div>
 					<div class="assignment_subitem"><?php echo $item['problems'] ?> problem<?php echo $item['problems']!=1?'s':'' ?></div>
