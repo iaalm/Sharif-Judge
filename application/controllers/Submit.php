@@ -117,7 +117,7 @@ class Submit extends CI_Controller
 		}
 
 		$this->load->view('templates/header', $this->data);
-		$this->load->view('pages/submit', $this->data);
+		$this->load->view('pages/problem', $this->data);
 		$this->load->view('templates/footer');
 	}
 
@@ -226,7 +226,7 @@ class Submit extends CI_Controller
                 $this->data['problem_id'] = $problem_id;
                 $this->data["content"] = file_get_contents($file_name)  or show_error('cannot open problem description !' , 404 ,'An Error Was Encountered');    ;
                 $this->load->view('templates/header', $this->data);
-                $this->load->view('pages/problem', $this->data);
+                $this->load->view('pages/submit', $this->data);
                 $this->load->view('templates/footer');
         }
 

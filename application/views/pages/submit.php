@@ -1,38 +1,14 @@
 <?php
-/**
- * Sharif Judge online judge
- * @file submit.php
- * @author Mohammad Javad Naderi <mjnaderi@gmail.com>
+/*
+ * @file problem
+ * @author iaalm <iaalmsimon@gmail.com>
+ * @date Nov 1, 2013
  */
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 
-<script>
-	p=[];
-	<?php foreach ($problems as $problem){
-		$languages = explode(',',$problem['allowed_languages']);
-		$items='';
-		foreach ($languages as $language){
-			$items = $items."'".trim($language)."',";
-		}
-		$items = substr($items,0,strlen($items)-1);
-		echo "p[{$problem['id']}] = [{$items}];";
-	} ?>
-	$(document).ready(function(){
-		$("select#problems").change(function(){
-			var v = $(this).val();
-			var text = '<option value="0" selected="selected">-- Select One --</option>\n';
-			if (v!=0)
-				for (i=0;i<p[v].length;i++){
-					text += '<option value="'+p[v][i]+'">'+p[v][i]+'</option>\n';
-				}
-			$("select#languages").html(text);
-		});
-	});
-</script>
-
 <?php $this->view('templates/top_bar'); ?>
-<?php $this->view('templates/side_bar',array('selected'=>'submit')); ?>
+<?php $this->view('templates/side_bar',array('selected'=>'assignments')); ?>
 <?php $now = shj_now(); ?>
 
 <div id="main_container">
@@ -42,6 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<span><?php echo $title ?></span>
 	</div>
 
+        <?php echo $content ;?>
 	<div id="main_content">
 		<?php if ($assignment['id']==0): ?>
 			<p>Please select an assignment first.</p>
@@ -68,16 +45,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				echo $coefficient;
 			?>%</p>
 			<?php echo form_open_multipart('submit') ?>
-			<p class="input_p">
-				<label for="problem" class="tiny">Problem:</label>
-				<select id="problems" name ="problem" class="sharif_input">
-					<option value="0" selected="selected">-- Select One --</option>
-					<?php foreach ($problems as $problem): ?>
-						<option value="<?php echo $problem['id'] ?>"><?php echo $problem['name'] ?></option>
-					<?php endforeach ?>
-				</select>
-				<?php echo form_error('problem','<div class="shj_error">','</div>'); ?>
-			</p>
+			 <input type="hidden" id="problems" name ="problem" class="sharif_input" value="<?php echo $problem_id; ?>" />
 			<p class="input_p">
 				<label for="problem" class="tiny">Language:</label>
 				<select id="languages" name="language" class="sharif_input">
@@ -102,5 +70,23 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php endif ?>
 
 	</div> <!-- main_content -->
-
+<script>
+	p=[];
+	<?php foreach ($problems as $problem){
+		$languages = explode(',',$problem['allowed_languages']);
+		$items='';
+		foreach ($languages as $language){
+			$items = $items."'".trim($language)."',";
+		}
+		$items = substr($items,0,strlen($items)-1);
+		echo "p[{$problem['id']}] = [{$items}];";
+	} ?>
+			var v = <?php echo $problem_id; ?>;
+			var text = '<option value="0" selected="selected">-- Select One --</option>\n';
+			if (v!=0)
+				for (i=0;i<p[v].length;i++){
+					text += '<option value="'+p[v][i]+'">'+p[v][i]+'</option>\n';
+				}
+			$("select#languages").html(text);
+</script>
 </div> <!-- main_container -->

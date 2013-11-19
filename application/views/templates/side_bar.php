@@ -75,9 +75,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<a href="<?php echo site_url('assignments') ?>"><li <?php echo ($selected=='assignments'?'class="selected"':'') ?>><i class="splashy-folder_modernist_opened"></i><span class="sidebar_text">Assignments</span></li></a>
 		</div>
 
-		<div class="side_box">
+		<!--
+                <div class="side_box">
 			<a href="<?php echo site_url('submit') ?>"><li <?php echo ($selected=='submit'?'class="selected"':'') ?>><i class="splashy-arrow_large_up"></i><span class="sidebar_text">Submit</span></li></a>
 		</div>
+                -->
 
 		<div class="side_box">
 			<a href="<?php echo site_url('submissions/final') ?>"><li <?php echo ($selected=='final_submissions'?'class="selected"':'') ?>><i class="splashy-marker_rounded_violet"></i><span class="sidebar_text">Final Submissions</span></li></a>
