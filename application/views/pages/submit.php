@@ -18,8 +18,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<span><?php echo $title ?></span>
 	</div>
 
-        <?php echo $content ;?>
 	<div id="main_content">
+                <?php echo $content ;?>
 		<?php if ($assignment['id']==0): ?>
 			<p>Please select an assignment first.</p>
 		<?php elseif ($this->user_model->get_user_level($username)==0 && !$assignment['open']): ?>
