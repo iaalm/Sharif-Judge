@@ -99,7 +99,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 developed by <a href=mailto:iaalmsimon@gmail.com>iaalm</a></p>
 		<p> based on    
 			<a href="http://sharifjudge.ir" target="_blank">&copy; Sharif Judge <?php echo SHJ_VERSION ?></a>
-			<a href="http://docs.sharifjudge.ir" target="_blank">Docs</a>
 		</p>
 		<p class="timer"></p>
 		<div id="shj_collapse">
