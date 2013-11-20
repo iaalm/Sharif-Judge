@@ -63,9 +63,9 @@ class Submissions extends CI_Controller
 			$this->excel->addHeader(array('Problem Filter:', $this->filter_problem));
 		$this->excel->addHeader(NULL); //newline
 		if ($this->user_level === 0)
-			$row=array('Final','Problem','Submit Time','Score','Delay (HH:MM)','Coefficient','Final Score','Language','Status','#');
+			$row=array('Final','Problem','Submit Time','Score','Language','Status','#');
 		else{
-			$row=array('Final','Submit ID','Username','Display Name','Problem','Submit Time','Score','Delay (HH:MM)','Coefficient','Final Score','Language','Status','#');
+			$row=array('Final','Submit ID','Username','Display Name','Problem','Submit Time','Score','Language','Status','#');
 			if ($view === 'final'){
 				array_unshift($row, "#2");
 				array_unshift($row, "#1");
@@ -98,9 +98,6 @@ class Submissions extends CI_Controller
 			}
 			else
 				$checked='*';
-
-			$extra_time = $this->assignment['extra_time'];
-			$delay = strtotime($item['time'])-$finish;
 			ob_start();
 			if ( eval($this->assignment['late_rule']) === FALSE ){
 				$coefficient = 'error';
@@ -110,25 +107,12 @@ class Submissions extends CI_Controller
 				$final_score = ceil($pre_score*$coefficient/100);
 			ob_end_clean();
 
-			if ($delay<0)
-				$delay = 0;
-			$delay /= 60;
-			$h = floor($delay/60);
-			$m = floor($delay%60);
-			if ($h<10)
-				$h="0$h";
-			if ($m<10)
-				$m="0$m";
-
 			if ($this->user_level === 0)
 				$row = array(
 					$checked,
 					$item['problem'].' ('.$pi['name'].')',
 					$item['time'],
 					$pre_score,
-					$h.':'.$m,
-					$coefficient,
-					$final_score,
 					filetype_to_language($item['file_type']),
 					$item['status'],
 					($view==='final'?$item['submit_count']:$item['submit_number'])
@@ -142,9 +126,6 @@ class Submissions extends CI_Controller
 					$item['problem'].' ('.$pi['name'].')',
 					$item['time'],
 					$pre_score,
-					$h.':'.$m,
-					$coefficient,
-					$final_score,
 					filetype_to_language($item['file_type']),
 					$item['status'],
 					($view==='final'?$item['submit_count']:$item['submit_number'])
