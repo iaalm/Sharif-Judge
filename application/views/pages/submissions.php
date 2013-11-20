@@ -131,9 +131,6 @@ $finish = strtotime($assignment['finish_time']);
 		<table class="sharif_table">
 			<thead>
 				<tr>
-				<?php if ($view=='all'): ?>
-					<th width="1%" rowspan="2">Final</th>
-				<?php endif ?>
 				<?php if ($user_level>0): ?>
 						<?php if ($view=='all'): ?>
 						<th width="5%" rowspan="2">submit ID</th>
@@ -187,19 +184,6 @@ $finish = strtotime($assignment['finish_time']);
 				$un = $item['username'];
 				?>
 				<tr u="<?php echo $item['username'] ?>" a="<?php echo $item['assignment'] ?>" p="<?php echo $item['problem'] ?>" s="<?php echo $item['submit_id'] ?>" <?php if ($view=='final' && $j%2==0){ echo 'class="hl"';} ?>>
-				<?php if ($view=='all'): ?>
-					<td>
-					<?php //if($item['username']==$username): ?>
-					<?php
-						$checked='';
-						if (isset($final_items[$item['username']][$item['problem']]['submit_id']))
-							if ($final_items[$item['username']][$item['problem']]['submit_id'] == $item['submit_id'])
-								$checked='checked';
-					?>
-					<div title="Set as Final Submission" class="set_final check p<?php echo $item['problem'] ?> <?php echo $checked ?>" id="<?php echo "sf".$item['submit_id']."_".$item['problem'] ?>"></div>
-					<?php //endif ?>
-					</td>
-				<?php endif ?>
 				<?php if ($user_level>0): ?>
 					<?php if ($view=='all'): ?>
 						<td><?php echo $item['submit_id'] ?></td>
