@@ -272,10 +272,14 @@ $finish = strtotime($assignment['finish_time']);
 								$class = strtolower($item['status']);
 								if ($class=='score')
 								{
-									if ($item['pre_score']>0)
+									if ($item['pre_score']>0){
 										$class='ok';
-									else
+                                                                                $item['status'] = 'Accepted';
+                                                                        }
+									else {
 										$class='wrong';
+                                                                                $item['status'] = 'Wrong Answer';
+                                                                        }
 								}
 							?>
 							<div class="btn <?php echo $class ?>" code="0" >

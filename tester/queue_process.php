@@ -47,28 +47,32 @@ function addJudgeResultToDB($sr, $type){
 	$main_file_name = $sr['main_file_name'];
 	$file_type = $sr['file_type'];
         
-        if($status == 'SCORE' && $pre_score == 10000){
+        if($status == 'SCORE'){
+            if($pre_score == 10000){
+                $res = $db -> query("SELECT start_time FROM {$prefix}assignments WHERE id = '$assignment'");
+                $r = $res->fetch_array();
+                $pre_score = strtotime($time) - strtotime($r[0]);
+                $res = $db -> query("SELECT COUNT(*) FROM {$prefix}all_submissions where username = '$username' AND assignment = '$assignment' AND problem = '$problem'");
+                $r = $res->fetch_array();
+                $pre_score += ($r[0] - 1) * 20 * 60;
 
-            $res = $db -> query("SELECT start_time FROM {$prefix}assignments WHERE id = '$assignment'");
-            $r = $res->fetch_array();
-            $pre_score = strtotime($time) - strtotime($r[0]);
-            $res = $db -> query("SELECT COUNT(*) FROM {$prefix}all_submissions where username = '$username' AND assignment = '$assignment' AND problem = '$problem'");
-            $r = $res->fetch_array();
-            $pre_score += ($r[0] - 1) * 20 * 60;
-            
-            $res = $db->query(
-                    "SELECT *
-                    FROM {$prefix}final_submissions
-                    WHERE username='$username' AND assignment='$assignment' AND problem='$problem'"
-            );
-            $r = $res->fetch_assoc();
-            if ($r === NULL)
-            {
-                    $db->query(
-                            "INSERT INTO {$prefix}final_submissions
-                            ( submit_id, username, assignment, problem, time, status, pre_score, submit_count, file_name, main_file_name, file_type)
-                            VALUES ('$submit_id','$username','$assignment','$problem','$time','$status','$pre_score','$submit_count','$file_name','$main_file_name','$file_type') "
-                    );
+                $res = $db->query(
+                        "SELECT *
+                        FROM {$prefix}final_submissions
+                        WHERE username='$username' AND assignment='$assignment' AND problem='$problem'"
+                );
+                $r = $res->fetch_assoc();
+                if ($r === NULL)
+                {
+                        $db->query(
+                                "INSERT INTO {$prefix}final_submissions
+                                ( submit_id, username, assignment, problem, time, status, pre_score, submit_count, file_name, main_file_name, file_type)
+                                VALUES ('$submit_id','$username','$assignment','$problem','$time','$status','$pre_score','$submit_count','$file_name','$main_file_name','$file_type') "
+                        );
+                }
+            }
+            else {
+                $pre_score = 0;
             }
         }
 
