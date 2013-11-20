@@ -115,10 +115,7 @@ class Submit extends CI_Controller
 		if ($this->form_validation->run()){
 			$this->_upload();
 		}
-
-		$this->load->view('templates/header', $this->data);
-		$this->load->view('pages/problem', $this->data);
-		$this->load->view('templates/footer');
+                redirect('/submissions/all');
 	}
 
 
