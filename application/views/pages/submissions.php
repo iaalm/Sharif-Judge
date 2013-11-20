@@ -68,32 +68,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				}
 			);
 		});
-		$(".set_final").click(
-			function(){
-				var row = $(this).parents('tr');
-				var submit_id = row.attr('s');
-				var problem = row.attr('p');
-				var username = row.attr('u');
-				$.post(
-					'<?php echo site_url('submissions/select') ?>',
-					{
-						submit_id:submit_id,
-						problem: problem,
-						username: username,
-						<?php echo $this->security->get_csrf_token_name(); ?>: '<?php echo $this->security->get_csrf_hash(); ?>'
-					},
-					function(a) {
-						if (a == "shj_success"){
-							$("tr[u='"+username+"'][p='"+problem+"']").find('.set_final').removeClass('checked');
-							$(".set_final#sf"+submit_id+"_"+problem).addClass('checked');
-						}
-						else if (a == "shj_finished" ){
-							alert("This assignment is finished. You cannot change your final submissions.");
-						}
-					}
-				);
-			}
-		);
 	});
 </script>
 
@@ -125,9 +99,6 @@ $finish = strtotime($assignment['finish_time']);
 
 	<div id="main_content">
 		<p><?php echo ucfirst($view); ?> Submissions of <?php echo $assignment['name']; ?></p>
-		<?php if ($view == "all"): ?>
-		<p><i class="splashy-warning_triangle"></i> You cannot change your final submissions after assignment finishes.</p>
-		<?php endif ?>
 		<table class="sharif_table">
 			<thead>
 				<tr>
