@@ -48,19 +48,20 @@ function addJudgeResultToDB($sr, $type){
 	$file_type = $sr['file_type'];
         
         if($status == 'SCORE' && $pre_score == 10000){
+
+            $res = $db -> query("SELECT start_time FROM {$prefix}assignments WHERE id = '$assignment'");
+            $r = $res->fetch_array();
+            $pre_score = strtotime($time) - strtotime($r[0]);
+            $res = $db -> query("SELECT COUNT(*) FROM {$prefix}all_submissions where username = '$username' AND assignment = '$assignment' AND problem = '$problem'");
+            $r = $res->fetch_array();
+            $pre_score += ($r[0] - 1) * 20 * 60;
+            
             $res = $db->query(
                     "SELECT *
                     FROM {$prefix}final_submissions
                     WHERE username='$username' AND assignment='$assignment' AND problem='$problem'"
             );
             $r = $res->fetch_assoc();
-
-            $res = $db -> query("SELECT start_time FROM {$prefix}assignments WHERE id = $assignment");
-            $r = $res->fetch_array();
-            $pre_score = strtotime($time) - strtotime($r[0]);
-            $res = $db -> query("SELECT COUNT(*) FROM sdoj_all_submissions where username = $username AND assignment = $assignment AND problem = $problem");
-            $r = $res->fetch_array();
-            $pre_score += ($r[0] - 1) * 20 * 60;
             if ($r === NULL)
             {
                     $db->query(
