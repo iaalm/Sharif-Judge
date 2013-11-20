@@ -115,21 +115,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<?php echo form_error('finish_time','<div class="shj_error">','</div>'); ?>
 			</p>
 			<p class="input_p clear">
-				<label for="extra_time">
+				<label style="display:none" for="extra_time">
 					Extra Time (minutes)<br>
 					<span class="form_comment">Extra time for late submissions.</span>
 				</label>
-				<input type="text" name="extra_time" id="extra_time" class="sharif_input medium" value="<?php
-					if ($edit){
-						$extra_time = floor($edit_assignment['extra_time']/60);
-						if ($extra_time%60==0)
-							echo ($extra_time/60).'*60';
-						else
-							echo $extra_time;
-					}
-					else
-						echo set_value('extra_time');
-				?>" />
+				<input style="display:none" type="text" name="extra_time" id="extra_time" class="sharif_input medium" value="0" />
 				<?php echo form_error('extra_time','<div class="shj_error">','</div>'); ?>
 			</p>
 			<p class="input_p clear">
@@ -169,10 +159,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<span class="form_comment">Check this to enable scoreboard.</span>
 				<?php echo form_error('scoreboard','<div class="shj_error">','</div>'); ?>
 			</p>
-			<p class="input_p">
-				<label for="late_rule">Coefficient rule (<a target="_blank" href="http://docs.sharifjudge.ir/add_assignment#coefficient_rule">?</a>)</label><br>
-				<span class="form_comment medium clear" style="display: block;">PHP script without <?php echo htmlspecialchars('<?php ?>') ?> tags</span>
-				<textarea name="late_rule" rows="14" class="sharif_input add_text"><?php
+			<p class="input_h_p">
+				<label for="late_rule" style="display:none">Coefficient rule (<a target="_blank" href="http://docs.sharifjudge.ir/add_assignment#coefficient_rule">?</a>)</label><br>
+				<span class="form_comment medium clear" style="display:none">PHP script without <?php echo htmlspecialchars('<?php ?>') ?> tags</span>
+				<textarea style="display:none" name="late_rule" rows="14" class="sharif_input add_text"><?php
 						if ($edit)
 							echo $edit_assignment['late_rule'];
 						else
@@ -187,7 +177,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<tr>
 				<th rowspan="2"></th>
 				<th rowspan="2">Name</th>
-				<th rowspan="2">Score</th>
 				<th colspan="3" style="border-bottom: 1px solid #BDBDBD">Time Limit (ms)</th>
 				<th rowspan="2">Memory<br>Limit (kB)</th>
 				<th rowspan="2">Allowed<br>Languages (<a target="_blank" href="http://docs.sharifjudge.ir/add_assignment#allowed_languages">?</a>)</th>
@@ -205,7 +194,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<tr>
 					<td><?php echo $problem['id']?></td>
 					<td><input type="text" name="name[]" class="sharif_input short" value="<?php echo $problem['name'] ?>"/></td>
-					<td><input type="text" name="score[]" class="sharif_input tiny2" value="<?php echo $problem['score'] ?>"/></td>
+					<td style="display:none"><input type="text" name="score[]" class="sharif_input tiny2" value="<?php echo $problem['score'] ?>"/></td>
 					<td><input type="text" name="c_time_limit[]" class="sharif_input tiny2" value="<?php echo $problem['c_time_limit'] ?>"/></td>
 					<td><input type="text" name="python_time_limit[]" class="sharif_input tiny2" value="<?php echo $problem['python_time_limit'] ?>"/></td>
 					<td><input type="text" name="java_time_limit[]" class="sharif_input tiny2" value="<?php echo $problem['java_time_limit'] ?>"/></td>

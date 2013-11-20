@@ -272,7 +272,7 @@ $finish = strtotime($assignment['finish_time']);
 								$class = strtolower($item['status']);
 								if ($class=='score')
 								{
-									if ($item['pre_score']==10000)
+									if ($item['pre_score']>0)
 										$class='ok';
 									else
 										$class='wrong';
