@@ -132,37 +132,28 @@ $finish = strtotime($assignment['finish_time']);
 			<thead>
 				<tr>
 				<?php if ($user_level>0): ?>
-						<?php if ($view=='all'): ?>
 						<th width="5%" rowspan="2">submit ID</th>
-						<?php else: ?>
-						<th width="3%" rowspan="2">#1</th>
-						<th width="3%" rowspan="2">#2</th>
-						<?php endif ?>
 						<th width="6%" rowspan="2">Username</th>
 						<th width="14%" rowspan="2">Display Name</th>
 						<th width="10%" rowspan="2">Problem</th>
 						<th width="14%" rowspan="2">Submit Time</th>
-						<th colspan="3">Score</th>
+						<th colspan="2">Score</th>
 						<th width="1%" rowspan="2">Language</th>
 						<th width="6%" rowspan="2">Status</th>
 						<th width="6%" rowspan="2">Code</th>
-						<?php if ($view=="final"): ?>
-						<th width="6%" rowspan="2">Log</th>
-						<?php endif ?>
 						<?php if ($user_level>=2): ?>
 						<th width="1%" rowspan="2">Rejudge</th>
 						<?php endif ?>
 						<th width="1%" rowspan="2">#</th>
 					</tr>
 					<tr>
-						<th width="5%" class="score">Score</th>
-						<th width="5%" class="score">Delay<br>%</th>
-						<th width="5%" class="score">Final Score</th>
+						<th width="7%" class="score">Score</th>
+						<th width="8%" class="score">Final Score</th>
 					</tr>
 				<?php else: ?>
 						<th width="10%" rowspan="2">Problem</th>
 						<th width="30%" rowspan="2">Submit Time</th>
-						<th width="7%" colspan="3">Score</th>
+						<th width="7%" colspan="2">Score</th>
 						<th width="1%" rowspan="2">Language</th>
 						<th width="30%" rowspan="2">Status</th>
 						<th width="15%" rowspan="2">Code</th>
@@ -170,7 +161,6 @@ $finish = strtotime($assignment['finish_time']);
 					</tr>
 					<tr>
 						<th width="7%" class="score">Score</th>
-						<th width="7%" class="score">Delay<br>%</th>
 						<th width="7%" class="score">Final Score</th>
 					</tr>
 				<?php endif ?>
@@ -244,7 +234,6 @@ $finish = strtotime($assignment['finish_time']);
 
 						echo $coefficient;
 					?></td>
-					<td style="font-weight: bold;"><?php echo $final_score ?> </td>
 					<td>
 						<?php echo filetype_to_language($item['file_type']) ?>
 					</td>
