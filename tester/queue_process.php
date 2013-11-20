@@ -46,40 +46,30 @@ function addJudgeResultToDB($sr, $type){
 	$file_name = $sr['file_name'];
 	$main_file_name = $sr['main_file_name'];
 	$file_type = $sr['file_type'];
+        
+        if($status == 'SCORE' && $pre_score == 10000){
+            $res = $db->query(
+                    "SELECT *
+                    FROM {$prefix}final_submissions
+                    WHERE username='$username' AND assignment='$assignment' AND problem='$problem'"
+            );
+            $r = $res->fetch_assoc();
 
-	$res = $db->query(
-		"SELECT *
-		FROM {$prefix}final_submissions
-		WHERE username='$username' AND assignment='$assignment' AND problem='$problem'"
-	);
-	$r = $res->fetch_assoc();
-
-	if ($r === NULL)
-	{
-		$db->query(
-			"INSERT INTO {$prefix}final_submissions
-			( submit_id, username, assignment, problem, time, status, pre_score, submit_count, file_name, main_file_name, file_type)
-			VALUES ('$submit_id','$username','$assignment','$problem','$time','$status','$pre_score','$submit_count','$file_name','$main_file_name','$file_type') "
-		);
-	}
-	else
-	{
-		$sid = $r['submit_id'];
-		if ($type === 'judge'){
-			$db->query(
-				"UPDATE {$prefix}final_submissions
-				SET submit_id='$submit_id', time='$time', status='$status', pre_score='$pre_score', submit_count='$submit_count', file_name='$file_name', main_file_name='$main_file_name', file_type='$file_type'
-				WHERE username='$username' AND assignment='$assignment' AND problem='$problem' "
-			);
-		}
-		elseif ($type === 'rejudge' && $sid === $submit_id){
-			$db->query(
-				"UPDATE {$prefix}final_submissions
-				SET submit_id='$submit_id', time='$time', status='$status', pre_score='$pre_score', file_name='$file_name', main_file_name='$main_file_name', file_type='$file_type'
-				WHERE username='$username' AND assignment='$assignment' AND problem='$problem' "
-			);
-		}
-	}
+            $res = $db -> query("SELECT start_time FROM {$prefix}assignments WHERE id = $assignment");
+            $r = $res->fetch_array();
+            $pre_score = strtotime($time) - strtotime($r[0]);
+            $res = $db -> query("SELECT COUNT(*) FROM sdoj_all_submissions where username = $username AND assignment = $assignment AND problem = $problem");
+            $r = $res->fetch_array();
+            $pre_score += ($r[0] - 1) * 20 * 60;
+            if ($r === NULL)
+            {
+                    $db->query(
+                            "INSERT INTO {$prefix}final_submissions
+                            ( submit_id, username, assignment, problem, time, status, pre_score, submit_count, file_name, main_file_name, file_type)
+                            VALUES ('$submit_id','$username','$assignment','$problem','$time','$status','$pre_score','$submit_count','$file_name','$main_file_name','$file_type') "
+                    );
+            }
+        }
 
 	$db->query(
 		"UPDATE {$prefix}all_submissions
@@ -240,8 +230,8 @@ do {
 
 	$sr['status'] = $stat;
 	$sr['pre_score'] = $score;
-
-	addJudgeResultToDB($sr, $type);
+        
+        addJudgeResultToDB($sr, $type);
 
 
 	$db->query(

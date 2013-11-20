@@ -216,12 +216,11 @@ $finish = strtotime($assignment['finish_time']);
 					?></td>
 				<?php endif ?>
 					<td><?php
-						$pi = $this->assignment_model->problem_info($assignment['id'],$item['problem']);
 						echo '<a title="Filter Submissions by This Problem" href="'.site_url('submissions/'.$view.($filter_user?'/user/'.$filter_user:'').'/problem/'.$item['problem']).'"><span>('.$item['problem'].')</span><span dir>'.$pi['name'].'</span> </a>';
 					?></td>
 					<td><?php echo $item['time'] ?></td>
 					<td><?php
-						$pre_score = ceil($item['pre_score']*$pi['score']/10000);
+						$pre_score = ceil($item['pre_score']);
 						echo $pre_score;
 					?></td>
 					<td><?php
