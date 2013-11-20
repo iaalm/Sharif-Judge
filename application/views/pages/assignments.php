@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php if (count($all_assignments)==0): ?>
 			<p style="text-align: center;">Nothing to show...</p>
 		<?php endif ?>
-                       <a href="<?php echo site_url('assignments/list_problems/') ?>">list problems</a>
+                        <div class="btn pending" code="0"><style>a{TEXT-DECORATION:none}a:hover{TEXT-DECORATION:underline}</style><a href="<?php echo site_url('assignments/list_problems/') ?>">list problems</a></div>
 		<?php foreach($all_assignments as $item): ?>
 			<div class="assignment_block" id="<?php echo $item['id'] ?>">
                             <div class="c1">

@@ -19,9 +19,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 
 	<div id="main_content">
-                <?php echo $content ;?>
+                <?php echo $content ;?><hr>
 		<?php if ($assignment['id']==0): ?>
-			<p>Please select an assignment first.</p>
+			<p>Please select an assignment first.</p>z
 		<?php elseif ($this->user_model->get_user_level($username)==0 && !$assignment['open']): ?>
 		<?php // if assignment is closed, non-student users (admin, instructors) still can submit ?>
 			<p>Selected assignment is closed.</p>
@@ -32,28 +32,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<?php elseif ( !$this->assignment_model->is_participant($assignment['participants'],$username) ): ?>
 			<p>You are not registered for submitting.</p>
 		<?php else: ?>
-			<p>Selected assignment: <?php echo $assignment['name'] ?></p>
-			<p>Coefficient: <?php
-				$extra_time = $assignment['extra_time'];
-				$delay = shj_now()-strtotime($assignment['finish_time']);;
-				ob_start();
-				if ( eval($assignment['late_rule']) === FALSE )
-					$coefficient = "error";
-				if (!isset($coefficient))
-					$coefficient = "error";
-				ob_end_clean();
-				echo $coefficient;
-			?>%</p>
 			<?php echo form_open_multipart('submit') ?>
 			 <input type="hidden" id="problems" name ="problem" class="sharif_input" value="<?php echo $problem_id; ?>" />
 			<p class="input_p">
+                        <table border="0"align="left"><tr><td>
 				<label for="problem" class="tiny">Language:</label>
 				<select id="languages" name="language" class="sharif_input">
 					<option value="0" selected="selected">-- Select One --</option>
 				</select>
-				<?php echo form_error('language','<div class="shj_error">','</div>'); ?>
-			</p>
-			<p class="input_p">
+				<?php echo form_error('language','<div class="shj_error">','</div>'); ?>&nbsp;&nbsp;&nbsp;</td>
+                            <td>
 				<label for="userfile" class="tiny">File:</label>
 				<input type="file" id="file" class="sharif_input medium" name="userfile" />
 				<?php if ($upload_state==='error'): ?>
@@ -62,10 +50,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<div class="shj_ok">File uploaded successfully. See the result in 'All Submissions'.</div>
 				<?php endif ?>
 				<?php echo $this->upload->display_errors('<div class="shj_error">','</div>'); ?>
-			</p>
-			<p class="input_p">
-				<input type="submit" value="Submit" class="sharif_input"/>
-			</p>
+                                &nbsp;&nbsp;&nbsp;</td><td>
+                                <input  type="submit" value="Submit" class="btn pending"/></div>
+                            </td></tr></table></p>
 			</form>
 		<?php endif ?>
 
