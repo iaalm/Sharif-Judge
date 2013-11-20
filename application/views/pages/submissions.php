@@ -103,36 +103,29 @@ $finish = strtotime($assignment['finish_time']);
 			<thead>
 				<tr>
 				<?php if ($user_level>0): ?>
-						<th width="5%" rowspan="2">submit ID</th>
-						<th width="6%" rowspan="2">Username</th>
-						<th width="14%" rowspan="2">Display Name</th>
-						<th width="10%" rowspan="2">Problem</th>
-						<th width="14%" rowspan="2">Submit Time</th>
-						<th colspan="2">Score</th>
-						<th width="1%" rowspan="2">Language</th>
-						<th width="6%" rowspan="2">Status</th>
-						<th width="6%" rowspan="2">Code</th>
+						<th width="5%">submit ID</th>
+						<th width="6%">Username</th>
+						<th width="14%">Display Name</th>
+						<th width="10%">Problem</th>
+						<th width="14%">Submit Time</th>
+						<th width="10%">Score</th>
+						<th width="1%">Language</th>
+						<th width="6%">Status</th>
+						<th width="6%">Code</th>
 						<?php if ($user_level>=2): ?>
-						<th width="1%" rowspan="2">Rejudge</th>
+						<th width="1%">Rejudge</th>
 						<?php endif ?>
-						<th width="1%" rowspan="2">#</th>
+						<th width="1%">#</th>
 					</tr>
-					<tr>
-						<th width="7%" class="score">Score</th>
-						<th width="8%" class="score">Final Score</th>
-					</tr>
+			
 				<?php else: ?>
-						<th width="10%" rowspan="2">Problem</th>
-						<th width="30%" rowspan="2">Submit Time</th>
-						<th width="7%" colspan="2">Score</th>
-						<th width="1%" rowspan="2">Language</th>
-						<th width="30%" rowspan="2">Status</th>
-						<th width="15%" rowspan="2">Code</th>
-						<th width="5%" rowspan="2">#</th>
-					</tr>
-					<tr>
-						<th width="7%" class="score">Score</th>
-						<th width="7%" class="score">Final Score</th>
+						<th width="10%">Problem</th>
+						<th width="30%">Submit Time</th>
+						<th width="7%">Score</th>
+						<th width="1%">Language</th>
+						<th width="30%">Status</th>
+						<th width="15%">Code</th>
+						<th width="5%">#</th>
 					</tr>
 				<?php endif ?>
 			</thead>
@@ -161,49 +154,13 @@ $finish = strtotime($assignment['finish_time']);
 					?></td>
 				<?php endif ?>
 					<td><?php
+                                                $pi = $this->assignment_model->problem_info($assignment['id'],$item['problem']);
 						echo '<a title="Filter Submissions by This Problem" href="'.site_url('submissions/'.$view.($filter_user?'/user/'.$filter_user:'').'/problem/'.$item['problem']).'"><span>('.$item['problem'].')</span><span dir>'.$pi['name'].'</span> </a>';
 					?></td>
 					<td><?php echo $item['time'] ?></td>
 					<td><?php
-						$pre_score = ceil($item['pre_score']);
-						echo $pre_score;
-					?></td>
-					<td><?php
-						$extra_time = $assignment['extra_time'];
-						$delay = strtotime($item['time'])-$finish;
-						ob_start();
-						if ( eval($assignment['late_rule']) === FALSE ){
-							$coefficient = 'error';
-							$final_score = 0;
-						}
-						else {
-							$final_score = ceil($pre_score*$coefficient/100);
-						}
-						if (!isset($coefficient))
-							$coefficient = 'error';
-						ob_end_clean();
-
-						$neg = FALSE;
-						if ($delay<0){
-							$delay = 0;
-							$neg = TRUE;
-						}
-						$delay /= 60;
-						$h = floor($delay/60);
-						$m = floor($delay%60);
-						if ($h<10)
-							$h="0$h";
-						if ($m<10)
-							$m="0$m";
-
-						echo '<span style="font-size: 80%; opacity:0.7; '.($neg?'':'color:red;').'">';
-						if ($delay === 0)
-							echo 'No Delay';
-						else
-							echo '<span title="Hours">'.$h.'</span>:<span title="Minutes">'.$m.'</span>';
-						echo '</span><br>';
-
-						echo $coefficient;
+						$pre_score = ceil($item['pre_score']/60);
+						if ($pre_score!=0) echo $pre_score." min";
 					?></td>
 					<td>
 						<?php echo filetype_to_language($item['file_type']) ?>
