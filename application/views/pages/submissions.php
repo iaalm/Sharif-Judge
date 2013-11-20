@@ -274,8 +274,6 @@ $finish = strtotime($assignment['finish_time']);
 								{
 									if ($item['pre_score']>0){
 										$class='ok';
-                                                                                $item['status'] = 'Accepted';
-                                                                        }
 									else {
 										$class='wrong';
                                                                                 $item['status'] = 'Wrong Answer';
