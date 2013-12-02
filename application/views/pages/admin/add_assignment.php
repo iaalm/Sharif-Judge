@@ -17,7 +17,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 		<td>';
 	var row2='</td>\
 		<td><input type="text" name="name[]" class="sharif_input short" value="Problem "/></td>\
-		<td><input type="text" name="score[]" class="sharif_input tiny2" value="100"/></td>\
 		<td><input type="text" name="c_time_limit[]" class="sharif_input tiny2" value="500"/></td>\
 		<td><input type="text" name="python_time_limit[]" class="sharif_input tiny2" value="1500"/></td>\
 		<td><input type="text" name="java_time_limit[]" class="sharif_input tiny2" value="2000"/></td>\
