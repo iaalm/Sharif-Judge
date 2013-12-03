@@ -433,6 +433,12 @@ class Assignments extends CI_Controller
         
         public function list_problems()
         {
+                if($this->assignment["open"] != "1"){
+                        show_error("The assignment is closed.");
+                }
+                if(strtotime($this->assignment["start_time"]) > time()){
+                        show_error('The assignment has not started yet, please wait.');
+                }
                 $data = array(
 			'username' => $this->username,
 			'user_level' => $this->user_level,
