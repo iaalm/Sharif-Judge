@@ -158,8 +158,21 @@ class Assignment_model extends CI_Model{
 
 
 	public function all_problems($assignment_id){
-		return $this->db->get_where('problems', array('assignment'=>$assignment_id))->result_array();
-	}
+		$problems = $this->db->get_where('problems', array('assignment'=>$assignment_id))->result_array();
+                array_multisort($problems['id'],SORT_NUMERIC,SORT_DESC,
+                        $problems["assignment"],
+                        $problems["name"],
+                        $problems["score"],
+                        $problems["is_upload_only"],
+                        $problems["c_time_limit"],
+                        $problems["java_time_limit"],
+                        $problems["python_time_limit"],
+                        $problems["memory_limit"],
+                        $problems["allowed_languages"],
+                        $problems["diff_cmd"],
+                        $problems["diff_arg"]);
+                return $problems;
+                 }
 
 
 	// ------------------------------------------------------------------------
