@@ -23,7 +23,8 @@ class Scoreboard_model extends CI_Model {
 		$scoreboard = array(
 			'username' => array(),
 			'score' => array(),
-			'submit_penalty' => array()
+			'submit_penalty' => array(),
+                        'total_prob' =>array()
 		);
 		$total_score = array();
 		$penalty = array();
@@ -31,6 +32,7 @@ class Scoreboard_model extends CI_Model {
 		$finish = strtotime($assignment['finish_time']);
 		$submit_penalty = $this->settings_model->get_setting('submit_penalty');
 		$scores = array();
+                $prob = array();
 		foreach ($submissions as $submission){
 
 			$pi = $this->assignment_model->problem_info($this->assignment['id'], $submission['problem']);
@@ -49,9 +51,9 @@ class Scoreboard_model extends CI_Model {
 			$delay = strtotime($submission['time'])-strtotime($assignment['start_time']);
 			$scores[$submission['username']][$submission['problem']]['score'] = $final_score;
 			$scores[$submission['username']][$submission['problem']]['time'] = $delay;
-
 			if ( ! isset($total_score[$submission['username']]))
 				$total_score[$submission['username']] = 0;
+                         $prob[$submission['username']]++;
 			if ( ! isset($penalty[$submission['username']]))
 				$penalty[$submission['username']] = 0;
 
@@ -63,9 +65,11 @@ class Scoreboard_model extends CI_Model {
 			array_push($scoreboard['username'], $user);
 			array_push($scoreboard['score'], $total_score[$user]);
 			array_push($scoreboard['submit_penalty'], $penalty[$user]);
+                        array_push($scoreboard['total_prob'],$prob[$user]);
 		}
 		array_multisort(
-			$scoreboard['score'], SORT_NUMERIC,SORT_DESC,
+                        $scoreboard['total_prob'],SORT_NUMERIC,SORT_DESC,
+			$scoreboard['score'], SORT_NUMERIC,SORT_ASC,
 			$scoreboard['submit_penalty'], SORT_NUMERIC,SORT_ASC,
 			$scoreboard['username']
 		);
