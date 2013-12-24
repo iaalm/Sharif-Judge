@@ -50,7 +50,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<?php if (isset($scores[$sc_username][$problem['id']]['score'])): ?>
 										<?php echo $scores[$sc_username][$problem['id']]['score']; ?>
 										<br>
-										<span class="scoreboard_hours" title="time"><?php echo floor($scores[$sc_username][$problem['id']]['time']/360)/10 ?> hours</span>
+										<span class="scoreboard_hours" title="time"><?php echo floor($scores[$sc_username][$problem['id']]['score']/6)/10 ?> hours</span>
 								<?php else: ?>
 										-
 								<?php endif ?>
@@ -59,7 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						<td>
 							<span style="font-weight: bold;"><?php echo $scoreboard['score'][$i] ?></span>
 							<br>
-							<span class="scoreboard_hours" title="total time + submit penalty"><?php echo floor($scoreboard['submit_penalty'][$i]/360)/10 ?> hours</span>
+							<span class="scoreboard_hours" title="total time + submit penalty"><?php echo floor($scoreboard['score'][$i]/6)/10 ?> hours</span>
 						</td>
 					</tr>
 					<?php $i++ ?>
